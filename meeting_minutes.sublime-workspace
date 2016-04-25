@@ -1,0 +1,302 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 447,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/app.js",
+			"settings":
+			{
+				"buffer_size": 67,
+				"line_ending": "Windows",
+				"name": "var React = require('react');"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Projects/Teron/meeting_minutes",
+		"/C/Projects/Teron/meeting_minutes/js",
+		"/C/Projects/Teron/meeting_minutes/node_modules"
+	],
+	"file_history":
+	[
+		"/C/Projects/Teron/meeting_minutes/package.json",
+		"/C/Projects/Teron/meeting_minutes/node_modules/bootstrap/package.json",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter.service.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter-searchfield.filter.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter-input.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter-certificates.filter.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter.ctrl.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/form-feedback/form-feedback.service.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/mypainters/mypainters-addtolist.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/mypainters/mypainters-launch-dialog.ctrl.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/styles/FPP/_painters-gallery.scss",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/styles/FPP/_ng-dialog.scss",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/contact-list/contact-list.service.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/mypainters/mypainters.service.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter-filter.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/index.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/contact-list/contact-list-add.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/form-feedback/form-feedback.ctrl.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter-sort.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/mypainters/mypainters.ctrl.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/mypainters/mypainters-removefromlist.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/gulpfile.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-main.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Content/templates/templates.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-painter-feedback.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-company-profile.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/gulp/config.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/mypainters/mypainters-dialog.ctrl.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/mypainters/mypainters-launch-dialog.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/contact-list/contact-list-painters-info.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/contact-list/contact-list-my-info.component.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/index.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/jade/angular-templates/mypainters/mypainters-dialog_step-1.jade",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/data/find-painters-data.json",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-project.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/styles/FPP/_project-navigation.scss",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/jade/painters-list.jade",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/jade/angular-templates/findpainter/findpainter-input.jade",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/jade/includes/layout.jade",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-about-guarantee.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/system.config.js",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/jade/angular-templates/findpainter/findpainter-list.jade",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-about-contacts.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-about-certificates.html",
+		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/mockup/tpl-about-faq.html"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"toLowercase",
+			"getPainter"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 447,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								447,
+								447
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"auto_name": "",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 67,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67,
+								67
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"auto_name": "var React = require('react');",
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.CSS Extended Completions":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "meeting_minutes.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 319.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

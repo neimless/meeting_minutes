@@ -1,0 +1,22 @@
+{
+  "name": "meeting_minutes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/app.js",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "browserify": "^13.0.0",
+    "flux": "^2.1.1",
+    "jquery": "^2.2.3",
+    "react": "^15.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neimless/meeting_minutes.git"
+  },
+  "author": "Tero Vyyryläinen"
+}
