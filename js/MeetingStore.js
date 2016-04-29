@@ -2,19 +2,38 @@ var AppDispatcher = require('./AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 
-var MeetingMinutes = {};
+var Meeting = {
+		state: 'NOTSTARTED'
+};
+var minuteId = 1;
 
-function create() {
-	var id = MeetingMinutes.length + 1;
-	MeetingMinutes[id] = {
-		id: id
+function create() {	
+	Meeting = {
+		state: 'INPROGRESS',
+		title: '',
+		date: '',
+		minutes: []
 	};
+};
+
+function addMinute() {
+	var id = minuteId;
+	minuteId++;
+	Meeting.minutes[id] = {
+		id: id,
+		title: '',
+		text: ''
+	};
+};
+
+function removeMinute(id) {
+	delete Meeting.minutes[id];
 };
 
 var MeetingStore = assign({}, EventEmitter.prototype, {
 
-  getAllMinutes: function() {
-    return MeetingMinutes;
+  getMeeting: function() {
+    return Meeting;
   },
 
   emitChange: function() {
@@ -28,7 +47,7 @@ var MeetingStore = assign({}, EventEmitter.prototype, {
   removeChangeListener: function(callback) {
     this.removeListener('change', callback);
   }
-  
+
 });
 
 AppDispatcher.register(function(action) {
@@ -37,6 +56,16 @@ AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case 'CREATE':
       create();
+      MeetingStore.emitChange();
+      break;
+
+ 	case 'ADDMINUTE':
+      addMinute();
+      MeetingStore.emitChange();
+      break;
+
+ 	case 'REMOVEMINUTE':
+      removeMinute(action.id);
       MeetingStore.emitChange();
       break;
 

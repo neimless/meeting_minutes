@@ -5,6 +5,19 @@ var MeetingActions = {
 		AppDispatcher.dispatch({
 			actionType: 'CREATE'
 		});
+	},
+
+	addMinute: function() {
+		AppDispatcher.dispatch({
+			actionType: 'ADDMINUTE'
+		})
+	},
+
+	removeMinute: function(id) {
+		AppDispatcher.dispatch({
+			actionType: 'REMOVEMINUTE',
+			id: id
+		})
 	}
 };
 
