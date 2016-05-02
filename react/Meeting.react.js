@@ -2,6 +2,9 @@ var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var MeetingActions = require('../js/MeetingActions');
 var MeetingMinute = require('./MeetingMinute.react');
+var MeetingMinuteForm = require('./MeetingMinuteForm.react');
+var Participant = require('./Participant.react');
+var ParticipantForm = require('./ParticipantForm.react');
 var classNames = require('classnames');
 
 var Meeting = React.createClass({
@@ -11,37 +14,39 @@ var Meeting = React.createClass({
 
 	render: function() {
 
-		var minuteRows = [
-			<div className="row">
-					<div className="col-md-4"><p>Item list</p></div>
-					<div className="col-md-8"><button className="btn btn-default" type="submit" onClick={this.addButtonClick}>Add minute</button></div>
-			</div>
-		];
-		var minutes = this.props.meeting.minutes;
+		var minuteRows = [];
+		var participantsRows = [];
+		var orderingNumber = 0;
 
-		for (key in minutes) {
-			minuteRows.push(<MeetingMinute key={key} minute={minutes[key]} />);
+		for (key in this.props.meeting.minutes) {
+			orderingNumber++;
+			minuteRows.push(<MeetingMinute key={key} minute={this.props.meeting.minutes[key]} order={orderingNumber} />);
+		}
+
+		for (key in this.props.meeting.participants) {
+			participantsRows.push(<Participant key={key} participant={this.props.meeting.participants[key]} />);
 		}
 
 		return (
 			<div className="tab-content">
-			    <div role="tabpanel" className="tab-pane active" id="general-tab">
-			    	general
-			    </div>
-			    <div role="tabpanel" className="tab-pane" id="participants-tab">
-			    	participants
-			    </div>
-			    <div role="tabpanel" className="tab-pane" id="minutes-tab">
-			    	{minuteRows}
-			    </div>
-			    <div role="tabpanel" className="tab-pane" id="overview-tab">
+				<div role="tabpanel" className="tab-pane active" id="overview-tab">
 			    	overview
 			    </div>
+			    <div role="tabpanel" className="tab-pane" id="participants-tab">
+			    	<ParticipantForm meeting={this.props.meeting} />	
+			    	<br/>		    	
+		    		{participantsRows}
+			    </div>
+			    <div role="tabpanel" className="tab-pane" id="minutes-tab">
+					<MeetingMinuteForm meeting={this.props.meeting} />
+					<br/>
+			    	{minuteRows}
+			    </div>			    
 		  	</div>
 		);
 	},
 
-	addButtonClick: function() {
+    addButtonClick: function() {
     	MeetingActions.addMinute();
     }
 });

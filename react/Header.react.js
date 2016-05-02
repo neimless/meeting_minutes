@@ -17,10 +17,9 @@ var Header = React.createClass({
 		var navigationTabs;
 		if (this.props.meeting.state === 'INPROGRESS') {
 			actionButton = <ul className="nav nav-tabs" role="tablist">
-							    <li role="presentation" className="active"><a href="#general-tab" role="tab" data-toggle="tab">General</a></li>
+								<li role="presentation" className="active"><a href="#overview-tab" role="tab" data-toggle="tab">Overview</a></li>
 							    <li role="presentation"><a href="#participants-tab" role="tab" data-toggle="tab">Participants</a></li>
-							    <li role="presentation"><a href="#minutes-tab" role="tab" data-toggle="tab">Minutes</a></li>
-							    <li role="presentation"><a href="#overview-tab" role="tab" data-toggle="tab">Overview</a></li>
+							    <li role="presentation"><a href="#minutes-tab" role="tab" data-toggle="tab">Minutes</a></li>							    
 						  	</ul>;
 		}
 

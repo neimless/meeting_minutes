@@ -8,26 +8,48 @@ var Meeting = {
 var minuteId = 1;
 
 function create() {	
+	console.log('MeetingStore.create');
 	Meeting = {
 		state: 'INPROGRESS',
 		title: '',
 		date: '',
-		minutes: []
+		minutes: [],
+		participants: []
 	};
 };
 
-function addMinute() {
+function addMinute(topic) {
+	console.log('MeetingStore.addMinute %s', topic);
 	var id = minuteId;
 	minuteId++;
 	Meeting.minutes[id] = {
 		id: id,
-		title: '',
+		topic: topic,
 		text: ''
 	};
 };
 
 function removeMinute(id) {
+	console.log('MeetingStore.removeMinute');
 	delete Meeting.minutes[id];
+};
+
+function editMinute(text, id) {
+	console.log('MeetingStore.addMinute %s, %s', id, text);
+	Meeting.minutes[id].text = text;
+};
+
+function addParticipant(name) {
+	console.log('MeetingStore.addParticipant %s', name);
+	Meeting.participants.push(name);
+};
+
+function removeParticipant(name) {
+	console.log('MeetingStore.removeParticipant');
+	var index = Meeting.participants.indexOf(name);
+	if (index !== -1) {
+		Meeting.participants.splice(index, 1);
+	};	
 };
 
 var MeetingStore = assign({}, EventEmitter.prototype, {
@@ -55,19 +77,34 @@ AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case 'CREATE':
-      create();
-      MeetingStore.emitChange();
-      break;
+		create();
+		MeetingStore.emitChange();
+		break;
 
  	case 'ADDMINUTE':
-      addMinute();
-      MeetingStore.emitChange();
-      break;
+		addMinute(action.topic);
+		MeetingStore.emitChange();
+		break;
 
  	case 'REMOVEMINUTE':
-      removeMinute(action.id);
-      MeetingStore.emitChange();
-      break;
+		removeMinute(action.id);
+		MeetingStore.emitChange();
+		break;
+
+	case 'EDITMINUTE':
+		editMinute(action.text, action.id);
+		MeetingStore.emitChange();
+		break;
+
+  	case 'ADDPARTICIPANT':
+  		addParticipant(action.name);
+  		MeetingStore.emitChange();
+		break;		
+
+	case 'REMOVEPARTICIPANT':
+  		removeParticipant(action.name);
+  		MeetingStore.emitChange();
+		break;		
 
     default:
   }

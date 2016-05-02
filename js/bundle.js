@@ -405,9 +405,10 @@ var MeetingActions = {
 		});
 	},
 
-	addMinute: function() {
+	addMinute: function(topic) {
 		AppDispatcher.dispatch({
-			actionType: 'ADDMINUTE'
+			actionType: 'ADDMINUTE',
+			topic: topic
 		})
 	},
 
@@ -415,6 +416,28 @@ var MeetingActions = {
 		AppDispatcher.dispatch({
 			actionType: 'REMOVEMINUTE',
 			id: id
+		})
+	},
+
+	editMinute: function(text, id) {
+		AppDispatcher.dispatch({
+			actionType: 'EDITMINUTE',
+			text: text,
+			id: id
+		})
+	},
+
+	addParticipant: function(name) {
+		AppDispatcher.dispatch({
+			actionType: 'ADDPARTICIPANT',
+			name: name
+		})
+	},
+
+	removeParticipant: function(name) {
+		AppDispatcher.dispatch({
+			actionType: 'REMOVEPARTICIPANT',
+			name: name
 		})
 	}
 };
@@ -432,26 +455,48 @@ var Meeting = {
 var minuteId = 1;
 
 function create() {	
+	console.log('MeetingStore.create');
 	Meeting = {
 		state: 'INPROGRESS',
 		title: '',
 		date: '',
-		minutes: []
+		minutes: [],
+		participants: []
 	};
 };
 
-function addMinute() {
+function addMinute(topic) {
+	console.log('MeetingStore.addMinute %s', topic);
 	var id = minuteId;
 	minuteId++;
 	Meeting.minutes[id] = {
 		id: id,
-		title: '',
+		topic: topic,
 		text: ''
 	};
 };
 
 function removeMinute(id) {
+	console.log('MeetingStore.removeMinute');
 	delete Meeting.minutes[id];
+};
+
+function editMinute(text, id) {
+	console.log('MeetingStore.addMinute %s, %s', id, text);
+	Meeting.minutes[id].text = text;
+};
+
+function addParticipant(name) {
+	console.log('MeetingStore.addParticipant %s', name);
+	Meeting.participants.push(name);
+};
+
+function removeParticipant(name) {
+	console.log('MeetingStore.removeParticipant');
+	var index = Meeting.participants.indexOf(name);
+	if (index !== -1) {
+		Meeting.participants.splice(index, 1);
+	};	
 };
 
 var MeetingStore = assign({}, EventEmitter.prototype, {
@@ -479,19 +524,34 @@ AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case 'CREATE':
-      create();
-      MeetingStore.emitChange();
-      break;
+		create();
+		MeetingStore.emitChange();
+		break;
 
  	case 'ADDMINUTE':
-      addMinute();
-      MeetingStore.emitChange();
-      break;
+		addMinute(action.topic);
+		MeetingStore.emitChange();
+		break;
 
  	case 'REMOVEMINUTE':
-      removeMinute(action.id);
-      MeetingStore.emitChange();
-      break;
+		removeMinute(action.id);
+		MeetingStore.emitChange();
+		break;
+
+	case 'EDITMINUTE':
+		editMinute(action.text, action.id);
+		MeetingStore.emitChange();
+		break;
+
+  	case 'ADDPARTICIPANT':
+  		addParticipant(action.name);
+  		MeetingStore.emitChange();
+		break;		
+
+	case 'REMOVEPARTICIPANT':
+  		removeParticipant(action.name);
+  		MeetingStore.emitChange();
+		break;		
 
     default:
   }
@@ -32367,10 +32427,9 @@ var Header = React.createClass({displayName: "Header",
 		var navigationTabs;
 		if (this.props.meeting.state === 'INPROGRESS') {
 			actionButton = React.createElement("ul", {className: "nav nav-tabs", role: "tablist"}, 
-							    React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {href: "#general-tab", role: "tab", "data-toggle": "tab"}, "General")), 
+								React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {href: "#overview-tab", role: "tab", "data-toggle": "tab"}, "Overview")), 
 							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#participants-tab", role: "tab", "data-toggle": "tab"}, "Participants")), 
-							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#minutes-tab", role: "tab", "data-toggle": "tab"}, "Minutes")), 
-							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#overview-tab", role: "tab", "data-toggle": "tab"}, "Overview"))
+							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#minutes-tab", role: "tab", "data-toggle": "tab"}, "Minutes"))							    
 						  	);
 		}
 
@@ -32397,6 +32456,9 @@ var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var MeetingActions = require('../js/MeetingActions');
 var MeetingMinute = require('./MeetingMinute.react');
+var MeetingMinuteForm = require('./MeetingMinuteForm.react');
+var Participant = require('./Participant.react');
+var ParticipantForm = require('./ParticipantForm.react');
 var classNames = require('classnames');
 
 var Meeting = React.createClass({displayName: "Meeting",
@@ -32406,44 +32468,46 @@ var Meeting = React.createClass({displayName: "Meeting",
 
 	render: function() {
 
-		var minuteRows = [
-			React.createElement("div", {className: "row"}, 
-					React.createElement("div", {className: "col-md-4"}, React.createElement("p", null, "Item list")), 
-					React.createElement("div", {className: "col-md-8"}, React.createElement("button", {className: "btn btn-default", type: "submit", onClick: this.addButtonClick}, "Add minute"))
-			)
-		];
-		var minutes = this.props.meeting.minutes;
+		var minuteRows = [];
+		var participantsRows = [];
+		var orderingNumber = 0;
 
-		for (key in minutes) {
-			minuteRows.push(React.createElement(MeetingMinute, {key: key, minute: minutes[key]}));
+		for (key in this.props.meeting.minutes) {
+			orderingNumber++;
+			minuteRows.push(React.createElement(MeetingMinute, {key: key, minute: this.props.meeting.minutes[key], order: orderingNumber}));
+		}
+
+		for (key in this.props.meeting.participants) {
+			participantsRows.push(React.createElement(Participant, {key: key, participant: this.props.meeting.participants[key]}));
 		}
 
 		return (
 			React.createElement("div", {className: "tab-content"}, 
-			    React.createElement("div", {role: "tabpanel", className: "tab-pane active", id: "general-tab"}, 
-			    	"general"
+				React.createElement("div", {role: "tabpanel", className: "tab-pane active", id: "overview-tab"}, 
+			    	"overview"
 			    ), 
 			    React.createElement("div", {role: "tabpanel", className: "tab-pane", id: "participants-tab"}, 
-			    	"participants"
+			    	React.createElement(ParticipantForm, {meeting: this.props.meeting}), 	
+			    	React.createElement("br", null), 		    	
+		    		participantsRows
 			    ), 
 			    React.createElement("div", {role: "tabpanel", className: "tab-pane", id: "minutes-tab"}, 
+					React.createElement(MeetingMinuteForm, {meeting: this.props.meeting}), 
+					React.createElement("br", null), 
 			    	minuteRows
-			    ), 
-			    React.createElement("div", {role: "tabpanel", className: "tab-pane", id: "overview-tab"}, 
-			    	"overview"
-			    )
+			    )			    
 		  	)
 		);
 	},
 
-	addButtonClick: function() {
+    addButtonClick: function() {
     	MeetingActions.addMinute();
     }
 });
 
 module.exports = Meeting;
 
-},{"../js/MeetingActions":4,"./MeetingMinute.react":193,"classnames":20,"react":189}],192:[function(require,module,exports){
+},{"../js/MeetingActions":4,"./MeetingMinute.react":193,"./MeetingMinuteForm.react":194,"./Participant.react":195,"./ParticipantForm.react":196,"classnames":20,"react":189}],192:[function(require,module,exports){
 var React = require('react');
 var MeetingStore = require('../js/MeetingStore');
 var Header = require('./Header.react');
@@ -32497,31 +32561,208 @@ module.exports = MeetingApp;
 },{"../js/MeetingStore":5,"./Header.react":190,"./Meeting.react":191,"classnames":20,"react":189}],193:[function(require,module,exports){
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
+var MeetingStore = require('../js/MeetingStore');
 var MeetingActions = require('../js/MeetingActions');
 var classNames = require('classnames');
 
 var MeetingMinute = React.createClass({displayName: "MeetingMinute",
 
 	propTypes: {
-		minute: ReactPropTypes.object.isRequired
+		minute: ReactPropTypes.object.isRequired,
+		order: ReactPropTypes.number.isRequired
 	},
 
+	getInitialState: function() {
+	    return {
+	      editing: false
+	    };
+  	},
+
 	render: function() {
-		var minute = this.props.minute;
+		var textfield = this.props.minute.text;
+		var firstButton = React.createElement("button", {className: "btn btn-default", onClick: this.editButtonClick}, "Edit");
+		var secondButton = React.createElement("button", {className: "btn btn-default", onClick: this.remButtonClick}, "Remove");
+		if (this.state.editing) {
+			textfield = React.createElement("textarea", {className: "form-control", rows: "5", defaultValue: this.props.minute.text, ref: "minuteText"});
+			firstButton = React.createElement("button", {className: "btn btn-default", onClick: this.saveButtonClick}, "Save");
+			secondButton = React.createElement("button", {className: "btn btn-default", onClick: this.editButtonClick}, "Cancel");
+		}	
 
 		return (
 			React.createElement("div", {className: "row"}, 
-				React.createElement("div", {className: "col-md-6"}, React.createElement("p", null, "Item number ", minute.id)), 
-				React.createElement("div", {className: "col-md-6"}, React.createElement("button", {className: "btn btn-default", onClick: this.remButtonClick}, "Remove"))
+				React.createElement("div", {className: "col-md-1"}, this.props.order), 
+				React.createElement("div", {className: "col-md-1"}, this.props.minute.topic), 
+				React.createElement("div", {className: "col-md-8"}, textfield), 
+				React.createElement("div", {className: "col-md-1"}, firstButton), 
+				React.createElement("div", {className: "col-md-1"}, secondButton)
 			)
 		);		
 	},
 
 	remButtonClick: function() {
 		MeetingActions.removeMinute(this.props.minute.id);
+	},
+
+	editButtonClick: function() {
+		this.state.editing = !this.state.editing;
+		MeetingStore.emitChange();
+	},
+
+	saveButtonClick: function() {
+		this.state.editing = !this.state.editing;
+		MeetingActions.editMinute(this.refs.minuteText.value, this.props.minute.id);
 	}
 });
 
 module.exports = MeetingMinute;
 
-},{"../js/MeetingActions":4,"classnames":20,"react":189}]},{},[6]);
+},{"../js/MeetingActions":4,"../js/MeetingStore":5,"classnames":20,"react":189}],194:[function(require,module,exports){
+var React = require('react');
+var ReactPropTypes = React.PropTypes;
+var MeetingStore = require('../js/MeetingStore');
+var MeetingActions = require('../js/MeetingActions');
+var classNames = require('classnames');
+
+var MeetingMinuteForm = React.createClass({displayName: "MeetingMinuteForm",
+
+	propTypes: {
+		meeting: ReactPropTypes.object.isRequired
+	},
+
+	getInitialState: function() {
+	    return {
+	      valid: true
+	    };
+	  },
+
+	render: function() {
+		var inputClass = 'col-md-3';
+		if (!this.state.valid) inputClass += ' has-error';
+
+		return (	
+			React.createElement("div", {className: "row"}, 
+		    	React.createElement("div", {className: "col-md-1"}, React.createElement("label", null, "Topic")), 
+		    	React.createElement("div", {className: inputClass}, React.createElement("input", {type: "text", className: "form-control", ref: "minuteTopic"}), React.createElement("span", {className: "text-danger", ref: "minuteTopicValidationError"})), 
+		    	React.createElement("div", {className: "col-md-4"}, React.createElement("button", {className: "btn btn-primary", onClick: this.addButtonClick}, "Add new meeting minute"))
+	    	)	    	
+		);		
+	},
+
+	emptyValidation: function() {
+		if (this.refs.minuteTopic.value == null || this.refs.minuteTopic.value == '') {			
+			this.refs.minuteTopicValidationError.innerHTML = 'Topic is required is required';
+			return false;
+		}
+		return true;
+	},
+
+    addButtonClick: function() {
+    	this.state.valid = true;    	
+    	if (this.emptyValidation()) {
+			this.refs.minuteTopicValidationError.innerHTML = '';
+			MeetingActions.addMinute(this.refs.minuteTopic.value);
+		} else {
+			this.state.valid = false;    	
+			MeetingStore.emitChange();
+		}
+    }
+});
+
+module.exports = MeetingMinuteForm;
+
+},{"../js/MeetingActions":4,"../js/MeetingStore":5,"classnames":20,"react":189}],195:[function(require,module,exports){
+var React = require('react');
+var ReactPropTypes = React.PropTypes;
+var MeetingActions = require('../js/MeetingActions');
+var classNames = require('classnames');
+
+var Participant = React.createClass({displayName: "Participant",
+
+	propTypes: {
+		participant: ReactPropTypes.string.isRequired
+	},
+
+	render: function() {
+		var participant = this.props.participant;
+
+		return (
+			React.createElement("div", {className: "row"}, 
+				React.createElement("div", {className: "col-md-6"}, React.createElement("p", null, participant)), 
+				React.createElement("div", {className: "col-md-6"}, React.createElement("button", {className: "btn btn-default", onClick: this.remButtonClick}, "Remove"))
+			)
+		);		
+	},
+
+	remButtonClick: function() {
+		MeetingActions.removeParticipant(this.props.participant);
+	}
+});
+
+module.exports = Participant;
+
+},{"../js/MeetingActions":4,"classnames":20,"react":189}],196:[function(require,module,exports){
+var React = require('react');
+var ReactPropTypes = React.PropTypes;
+var MeetingStore = require('../js/MeetingStore');
+var MeetingActions = require('../js/MeetingActions');
+var classNames = require('classnames');
+
+var ParticipantForm = React.createClass({displayName: "ParticipantForm",
+
+	propTypes: {
+		meeting: ReactPropTypes.object.isRequired
+	},
+
+	getInitialState: function() {
+	    return {
+	      valid: true
+	    };
+	  },
+
+	render: function() {
+		var inputClass = 'col-md-3';
+		if (!this.state.valid) inputClass += ' has-error';
+
+		return (	
+			React.createElement("div", {className: "row"}, 
+		    	React.createElement("div", {className: "col-md-1"}, React.createElement("label", null, "Name")), 
+		    	React.createElement("div", {className: inputClass}, React.createElement("input", {type: "text", className: "form-control", ref: "participantName"}), React.createElement("span", {className: "text-danger", ref: "participantNameValidationError"})), 
+		    	React.createElement("div", {className: "col-md-4"}, React.createElement("button", {className: "btn btn-success", onClick: this.addParticipantClick}, "Add Participant"))
+	    	)
+	    	
+		);		
+	},
+
+	emptyValidation: function() {
+		if (this.refs.participantName.value == null || this.refs.participantName.value == '') {			
+			this.refs.participantNameValidationError.innerHTML = 'Name is required';
+			return false;
+		}
+		return true;
+	},
+
+	existingValidation: function() {
+		for (key in this.props.meeting.participants) {
+			if (this.props.meeting.participants[key] == this.refs.participantName.value) {
+				this.refs.participantNameValidationError.innerHTML = 'Duplicate name found from list';
+				return false;
+			}
+		}
+		return true;
+	},
+
+	addParticipantClick: function() {
+		this.state.valid = true;
+		if (this.emptyValidation() && this.existingValidation()) {
+			this.refs.participantNameValidationError.innerHTML = '';
+			MeetingActions.addParticipant(this.refs.participantName.value);
+		} else {
+			this.state.valid = false;    	
+			MeetingStore.emitChange();
+		}		
+    }
+});
+
+module.exports = ParticipantForm;
+
+},{"../js/MeetingActions":4,"../js/MeetingStore":5,"classnames":20,"react":189}]},{},[6]);
