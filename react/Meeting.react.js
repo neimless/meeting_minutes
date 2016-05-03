@@ -5,6 +5,7 @@ var MeetingMinute = require('./MeetingMinute.react');
 var MeetingMinuteForm = require('./MeetingMinuteForm.react');
 var Participant = require('./Participant.react');
 var ParticipantForm = require('./ParticipantForm.react');
+var Overview = require('./Overview.react');
 var classNames = require('classnames');
 
 var Meeting = React.createClass({
@@ -14,25 +15,23 @@ var Meeting = React.createClass({
 
 	render: function() {
 
-		var minuteRows = [];
-		var participantsRows = [];
 		var orderingNumber = 0;
 
-		for (key in this.props.meeting.minutes) {
+		var minuteRows = this.props.meeting.minutes.map(function(minute) {
 			orderingNumber++;
-			minuteRows.push(<MeetingMinute key={key} minute={this.props.meeting.minutes[key]} order={orderingNumber} />);
-		}
+			return <MeetingMinute key={minute.id} minute={minute} order={orderingNumber} />;
+		});
 
-		for (key in this.props.meeting.participants) {
-			participantsRows.push(<Participant key={key} participant={this.props.meeting.participants[key]} />);
-		}
+		var participantsRows = this.props.meeting.participants.map(function(part) {
+			return <Participant key={part} participant={part} />
+		});
 
 		return (
 			<div className="tab-content">
-				<div role="tabpanel" className="tab-pane active" id="overview-tab">
-			    	overview
+				<div role="tabpanel" className="tab-pane" id="overview-tab">
+			    	<Overview meeting={this.props.meeting} />
 			    </div>
-			    <div role="tabpanel" className="tab-pane" id="participants-tab">
+			    <div role="tabpanel" className="tab-pane active" id="participants-tab">
 			    	<ParticipantForm meeting={this.props.meeting} />	
 			    	<br/>		    	
 		    		{participantsRows}

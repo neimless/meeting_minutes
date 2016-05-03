@@ -14,17 +14,17 @@ var MeetingMinuteForm = React.createClass({
 	    return {
 	      valid: true
 	    };
-	  },
+  	},
 
 	render: function() {
-		var inputClass = 'col-md-3';
+		var inputClass = 'col-md-5';
 		if (!this.state.valid) inputClass += ' has-error';
 
 		return (	
 			<div className="row">
 		    	<div className="col-md-1"><label>Topic</label></div>
 		    	<div className={inputClass}><input type="text" className="form-control" ref="minuteTopic" /><span className="text-danger" ref="minuteTopicValidationError"></span></div>
-		    	<div className="col-md-4"><button className="btn btn-primary" onClick={this.addButtonClick}>Add new meeting minute</button></div>
+		    	<div className="col-md-2"><button className="btn btn-info" onClick={this.addButtonClick}>Add new meeting minute</button></div>
 	    	</div>	    	
 		);		
 	},

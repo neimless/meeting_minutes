@@ -19,19 +19,18 @@ var MeetingMinute = React.createClass({
 
 	render: function() {
 		var textfield = this.props.minute.text;
-		var firstButton = <button className="btn btn-default" onClick={this.editButtonClick}>Edit</button>;
-		var secondButton = <button className="btn btn-default" onClick={this.remButtonClick}>Remove</button>;
+		var firstButton = <button className="btn btn-info" onClick={this.editButtonClick}>Edit</button>;
+		var secondButton = <button className="btn btn-danger" onClick={this.remButtonClick}>Remove</button>;
 		if (this.state.editing) {
 			textfield = <textarea className="form-control" rows="5" defaultValue={this.props.minute.text} ref="minuteText"></textarea>;
-			firstButton = <button className="btn btn-default" onClick={this.saveButtonClick}>Save</button>;
-			secondButton = <button className="btn btn-default" onClick={this.editButtonClick}>Cancel</button>;
+			firstButton = <button className="btn btn-success" onClick={this.saveButtonClick}>Save</button>;
+			secondButton = <button className="btn btn-warning" onClick={this.editButtonClick}>Cancel</button>;
 		}	
 
 		return (
 			<div className="row">
-				<div className="col-md-1">{this.props.order}</div>
-				<div className="col-md-1">{this.props.minute.topic}</div>
-				<div className="col-md-8">{textfield}</div>
+				<div className="col-md-3">{this.props.order}. {this.props.minute.topic}</div>
+				<div className="col-md-7">{textfield}</div>
 				<div className="col-md-1">{firstButton}</div>
 				<div className="col-md-1">{secondButton}</div>
 			</div>

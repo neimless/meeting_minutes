@@ -24,7 +24,7 @@ var ParticipantForm = React.createClass({
 			<div className="row">
 		    	<div className="col-md-1"><label>Name</label></div>
 		    	<div className={inputClass}><input type="text" className="form-control" ref="participantName" /><span className="text-danger" ref="participantNameValidationError"></span></div>
-		    	<div className="col-md-4"><button className="btn btn-success" onClick={this.addParticipantClick}>Add Participant</button></div>
+		    	<div className="col-md-4"><button className="btn btn-info" onClick={this.addParticipantClick}>Add Participant</button></div>
 	    	</div>
 	    	
 		);		

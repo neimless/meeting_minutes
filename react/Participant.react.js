@@ -14,8 +14,8 @@ var Participant = React.createClass({
 
 		return (
 			<div className="row">
-				<div className="col-md-6"><p>{participant}</p></div>
-				<div className="col-md-6"><button className="btn btn-default" onClick={this.remButtonClick}>Remove</button></div>
+				<div className="col-md-10"><p>{participant}</p></div>
+				<div className="col-md-2"><button className="btn btn-danger" onClick={this.remButtonClick}>Remove</button></div>
 			</div>
 		);		
 	},

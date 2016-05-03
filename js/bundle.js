@@ -458,8 +458,8 @@ function create() {
 	console.log('MeetingStore.create');
 	Meeting = {
 		state: 'INPROGRESS',
-		title: '',
-		date: '',
+		title: 'TestMeeting',
+		date: new Date().toLocaleString('fi'),
 		minutes: [],
 		participants: []
 	};
@@ -477,7 +477,7 @@ function addMinute(topic) {
 };
 
 function removeMinute(id) {
-	console.log('MeetingStore.removeMinute');
+	console.log('MeetingStore.removeMinute %s', id);
 	delete Meeting.minutes[id];
 };
 
@@ -492,7 +492,7 @@ function addParticipant(name) {
 };
 
 function removeParticipant(name) {
-	console.log('MeetingStore.removeParticipant');
+	console.log('MeetingStore.removeParticipant %s', name);
 	var index = Meeting.participants.indexOf(name);
 	if (index !== -1) {
 		Meeting.participants.splice(index, 1);
@@ -32419,24 +32419,30 @@ var Header = React.createClass({displayName: "Header",
 	},
 
 	render: function() {
+		var title = React.createElement("div", {className: "col-md-4"}, React.createElement("h1", null, "Meeting minutes"));
+		var date = React.createElement("div", {className: "col-md-2"}, React.createElement("h2", null));
+
 		var actionButton;
 		if (this.props.meeting.state === 'NOTSTARTED') {
-			actionButton = React.createElement("div", {className: "col-md-8"}, React.createElement("button", {className: "btn btn-default", type: "submit", onClick: this.startButtonClick}, "Start meeting"));
+			actionButton = React.createElement("div", {className: "col-md-8"}, React.createElement("button", {className: "btn btn-success", type: "submit", onClick: this.startButtonClick}, "Start meeting"));
 		}
 
 		var navigationTabs;
 		if (this.props.meeting.state === 'INPROGRESS') {
-			actionButton = React.createElement("ul", {className: "nav nav-tabs", role: "tablist"}, 
-								React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {href: "#overview-tab", role: "tab", "data-toggle": "tab"}, "Overview")), 
-							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#participants-tab", role: "tab", "data-toggle": "tab"}, "Participants")), 
-							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#minutes-tab", role: "tab", "data-toggle": "tab"}, "Minutes"))							    
+			actionButton = React.createElement("ul", {className: "nav nav-tabs", role: "tablist"}, 								
+							    React.createElement("li", {role: "presentation", className: "active"}, React.createElement("a", {href: "#participants-tab", role: "tab", "data-toggle": "tab"}, "Participants")), 
+							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#minutes-tab", role: "tab", "data-toggle": "tab"}, "Minutes")), 	
+							    React.createElement("li", {role: "presentation"}, React.createElement("a", {href: "#overview-tab", role: "tab", "data-toggle": "tab"}, "Overview"))						    
 						  	);
+		  	title = React.createElement("div", {className: "col-md-3"}, React.createElement("h1", null, this.props.meeting.title));
+		  	date = React.createElement("div", {className: "col-md-3"}, React.createElement("h3", null, this.props.meeting.date));
 		}
 
 		return (
 			React.createElement("header", {className: "page-header container"}, 
 				React.createElement("div", {className: "row"}, 
-					React.createElement("div", {className: "col-md-4"}, React.createElement("h1", null, "Meeting minutes")), 
+					title, 
+					date, 
 					actionButton, 
 					navigationTabs
 				)				
@@ -32459,6 +32465,7 @@ var MeetingMinute = require('./MeetingMinute.react');
 var MeetingMinuteForm = require('./MeetingMinuteForm.react');
 var Participant = require('./Participant.react');
 var ParticipantForm = require('./ParticipantForm.react');
+var Overview = require('./Overview.react');
 var classNames = require('classnames');
 
 var Meeting = React.createClass({displayName: "Meeting",
@@ -32468,25 +32475,23 @@ var Meeting = React.createClass({displayName: "Meeting",
 
 	render: function() {
 
-		var minuteRows = [];
-		var participantsRows = [];
 		var orderingNumber = 0;
 
-		for (key in this.props.meeting.minutes) {
+		var minuteRows = this.props.meeting.minutes.map(function(minute) {
 			orderingNumber++;
-			minuteRows.push(React.createElement(MeetingMinute, {key: key, minute: this.props.meeting.minutes[key], order: orderingNumber}));
-		}
+			return React.createElement(MeetingMinute, {key: minute.id, minute: minute, order: orderingNumber});
+		});
 
-		for (key in this.props.meeting.participants) {
-			participantsRows.push(React.createElement(Participant, {key: key, participant: this.props.meeting.participants[key]}));
-		}
+		var participantsRows = this.props.meeting.participants.map(function(part) {
+			return React.createElement(Participant, {key: part, participant: part})
+		});
 
 		return (
 			React.createElement("div", {className: "tab-content"}, 
-				React.createElement("div", {role: "tabpanel", className: "tab-pane active", id: "overview-tab"}, 
-			    	"overview"
+				React.createElement("div", {role: "tabpanel", className: "tab-pane", id: "overview-tab"}, 
+			    	React.createElement(Overview, {meeting: this.props.meeting})
 			    ), 
-			    React.createElement("div", {role: "tabpanel", className: "tab-pane", id: "participants-tab"}, 
+			    React.createElement("div", {role: "tabpanel", className: "tab-pane active", id: "participants-tab"}, 
 			    	React.createElement(ParticipantForm, {meeting: this.props.meeting}), 	
 			    	React.createElement("br", null), 		    	
 		    		participantsRows
@@ -32507,7 +32512,7 @@ var Meeting = React.createClass({displayName: "Meeting",
 
 module.exports = Meeting;
 
-},{"../js/MeetingActions":4,"./MeetingMinute.react":193,"./MeetingMinuteForm.react":194,"./Participant.react":195,"./ParticipantForm.react":196,"classnames":20,"react":189}],192:[function(require,module,exports){
+},{"../js/MeetingActions":4,"./MeetingMinute.react":193,"./MeetingMinuteForm.react":194,"./Overview.react":195,"./Participant.react":196,"./ParticipantForm.react":197,"classnames":20,"react":189}],192:[function(require,module,exports){
 var React = require('react');
 var MeetingStore = require('../js/MeetingStore');
 var Header = require('./Header.react');
@@ -32580,19 +32585,18 @@ var MeetingMinute = React.createClass({displayName: "MeetingMinute",
 
 	render: function() {
 		var textfield = this.props.minute.text;
-		var firstButton = React.createElement("button", {className: "btn btn-default", onClick: this.editButtonClick}, "Edit");
-		var secondButton = React.createElement("button", {className: "btn btn-default", onClick: this.remButtonClick}, "Remove");
+		var firstButton = React.createElement("button", {className: "btn btn-info", onClick: this.editButtonClick}, "Edit");
+		var secondButton = React.createElement("button", {className: "btn btn-danger", onClick: this.remButtonClick}, "Remove");
 		if (this.state.editing) {
 			textfield = React.createElement("textarea", {className: "form-control", rows: "5", defaultValue: this.props.minute.text, ref: "minuteText"});
-			firstButton = React.createElement("button", {className: "btn btn-default", onClick: this.saveButtonClick}, "Save");
-			secondButton = React.createElement("button", {className: "btn btn-default", onClick: this.editButtonClick}, "Cancel");
+			firstButton = React.createElement("button", {className: "btn btn-success", onClick: this.saveButtonClick}, "Save");
+			secondButton = React.createElement("button", {className: "btn btn-warning", onClick: this.editButtonClick}, "Cancel");
 		}	
 
 		return (
 			React.createElement("div", {className: "row"}, 
-				React.createElement("div", {className: "col-md-1"}, this.props.order), 
-				React.createElement("div", {className: "col-md-1"}, this.props.minute.topic), 
-				React.createElement("div", {className: "col-md-8"}, textfield), 
+				React.createElement("div", {className: "col-md-3"}, this.props.order, ". ", this.props.minute.topic), 
+				React.createElement("div", {className: "col-md-7"}, textfield), 
 				React.createElement("div", {className: "col-md-1"}, firstButton), 
 				React.createElement("div", {className: "col-md-1"}, secondButton)
 			)
@@ -32633,17 +32637,17 @@ var MeetingMinuteForm = React.createClass({displayName: "MeetingMinuteForm",
 	    return {
 	      valid: true
 	    };
-	  },
+  	},
 
 	render: function() {
-		var inputClass = 'col-md-3';
+		var inputClass = 'col-md-5';
 		if (!this.state.valid) inputClass += ' has-error';
 
 		return (	
 			React.createElement("div", {className: "row"}, 
 		    	React.createElement("div", {className: "col-md-1"}, React.createElement("label", null, "Topic")), 
 		    	React.createElement("div", {className: inputClass}, React.createElement("input", {type: "text", className: "form-control", ref: "minuteTopic"}), React.createElement("span", {className: "text-danger", ref: "minuteTopicValidationError"})), 
-		    	React.createElement("div", {className: "col-md-4"}, React.createElement("button", {className: "btn btn-primary", onClick: this.addButtonClick}, "Add new meeting minute"))
+		    	React.createElement("div", {className: "col-md-2"}, React.createElement("button", {className: "btn btn-info", onClick: this.addButtonClick}, "Add new meeting minute"))
 	    	)	    	
 		);		
 	},
@@ -32676,6 +32680,50 @@ var ReactPropTypes = React.PropTypes;
 var MeetingActions = require('../js/MeetingActions');
 var classNames = require('classnames');
 
+var Overview = React.createClass({displayName: "Overview",
+
+	propTypes: {
+		meeting: ReactPropTypes.object.isRequired
+	},
+
+	render: function() {
+
+		var orderingNumber = 0;
+		var minuteRows = this.props.meeting.minutes.map(function(minute) {
+			orderingNumber++;
+			return (React.createElement("div", {className: "row"}, 
+						React.createElement("div", {className: "col-md-3"}, React.createElement("b", null, orderingNumber, "."), " ", minute.topic), 
+						React.createElement("div", {className: "col-md-9"}, minute.text)
+					));
+		});
+
+		var participantsRows = this.props.meeting.participants.map(function(part) {
+			return (React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-md-10 col-md-offset-1"}, part)));
+		});
+
+		return (
+			React.createElement("div", null, 
+				React.createElement("div", {className: "row"}, 
+					React.createElement("div", {className: "col-md-12"}, React.createElement("h4", null, "Participant"))					
+				), 
+				participantsRows, 
+				React.createElement("div", {className: "row"}, 
+					React.createElement("div", {className: "col-md-12"}, React.createElement("h4", null, "Minutes"))					
+				), 
+				minuteRows
+			)
+		);		
+	}
+});
+
+module.exports = Overview;
+
+},{"../js/MeetingActions":4,"classnames":20,"react":189}],196:[function(require,module,exports){
+var React = require('react');
+var ReactPropTypes = React.PropTypes;
+var MeetingActions = require('../js/MeetingActions');
+var classNames = require('classnames');
+
 var Participant = React.createClass({displayName: "Participant",
 
 	propTypes: {
@@ -32687,8 +32735,8 @@ var Participant = React.createClass({displayName: "Participant",
 
 		return (
 			React.createElement("div", {className: "row"}, 
-				React.createElement("div", {className: "col-md-6"}, React.createElement("p", null, participant)), 
-				React.createElement("div", {className: "col-md-6"}, React.createElement("button", {className: "btn btn-default", onClick: this.remButtonClick}, "Remove"))
+				React.createElement("div", {className: "col-md-10"}, React.createElement("p", null, participant)), 
+				React.createElement("div", {className: "col-md-2"}, React.createElement("button", {className: "btn btn-danger", onClick: this.remButtonClick}, "Remove"))
 			)
 		);		
 	},
@@ -32700,7 +32748,7 @@ var Participant = React.createClass({displayName: "Participant",
 
 module.exports = Participant;
 
-},{"../js/MeetingActions":4,"classnames":20,"react":189}],196:[function(require,module,exports){
+},{"../js/MeetingActions":4,"classnames":20,"react":189}],197:[function(require,module,exports){
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var MeetingStore = require('../js/MeetingStore');
@@ -32727,7 +32775,7 @@ var ParticipantForm = React.createClass({displayName: "ParticipantForm",
 			React.createElement("div", {className: "row"}, 
 		    	React.createElement("div", {className: "col-md-1"}, React.createElement("label", null, "Name")), 
 		    	React.createElement("div", {className: inputClass}, React.createElement("input", {type: "text", className: "form-control", ref: "participantName"}), React.createElement("span", {className: "text-danger", ref: "participantNameValidationError"})), 
-		    	React.createElement("div", {className: "col-md-4"}, React.createElement("button", {className: "btn btn-success", onClick: this.addParticipantClick}, "Add Participant"))
+		    	React.createElement("div", {className: "col-md-4"}, React.createElement("button", {className: "btn btn-info", onClick: this.addParticipantClick}, "Add Participant"))
 	    	)
 	    	
 		);		

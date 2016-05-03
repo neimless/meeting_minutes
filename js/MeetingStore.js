@@ -11,8 +11,8 @@ function create() {
 	console.log('MeetingStore.create');
 	Meeting = {
 		state: 'INPROGRESS',
-		title: '',
-		date: '',
+		title: 'TestMeeting',
+		date: new Date().toLocaleString('fi'),
 		minutes: [],
 		participants: []
 	};
@@ -30,7 +30,7 @@ function addMinute(topic) {
 };
 
 function removeMinute(id) {
-	console.log('MeetingStore.removeMinute');
+	console.log('MeetingStore.removeMinute %s', id);
 	delete Meeting.minutes[id];
 };
 
@@ -45,7 +45,7 @@ function addParticipant(name) {
 };
 
 function removeParticipant(name) {
-	console.log('MeetingStore.removeParticipant');
+	console.log('MeetingStore.removeParticipant %s', name);
 	var index = Meeting.participants.indexOf(name);
 	if (index !== -1) {
 		Meeting.participants.splice(index, 1);
