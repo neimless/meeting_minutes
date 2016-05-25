@@ -3,25 +3,159 @@
 	{
 		"selected_items":
 		[
+			[
+				"part",
+				"participantsRows"
+			],
+			[
+				"col",
+				"col-md-offset-8"
+			],
+			[
+				"Meeting",
+				"MeetingActions"
+			],
+			[
+				"meet",
+				"MeetingStore"
+			],
+			[
+				"text",
+				"textfield"
+			],
+			[
+				"minute",
+				"minuteTopic"
+			],
+			[
+				"input",
+				"inputClass"
+			],
+			[
+				"parti",
+				"Participant"
+			],
+			[
+				"Reac",
+				"ReactPropTypes"
+			],
+			[
+				"col-md",
+				"col-md-4"
+			],
+			[
+				"remove",
+				"removeParticipant"
+			],
+			[
+				"class",
+				"className"
+			],
+			[
+				"all",
+				"allMinutes"
+			],
+			[
+				"Meetin",
+				"Meetingactions"
+			],
+			[
+				"get",
+				"getAllMinutes"
+			],
+			[
+				"emit",
+				"emitChange"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "index.html",
+			"file": "react/Header.react.js",
 			"settings":
 			{
-				"buffer_size": 447,
+				"buffer_size": 1608,
+				"line_ending": "Windows",
+				"name": "var React = require('react');"
+			}
+		},
+		{
+			"file": "js/MeetingStore.js",
+			"settings":
+			{
+				"buffer_size": 2192,
+				"line_ending": "Windows",
+				"name": "var AppDispatcher = require('AppDispatcher');"
+			}
+		},
+		{
+			"file": "react/MeetingApp.react.js",
+			"settings":
+			{
+				"buffer_size": 996,
+				"line_ending": "Windows",
+				"name": "var React = require('react');"
+			}
+		},
+		{
+			"file": "react/Meeting.react.js",
+			"settings":
+			{
+				"buffer_size": 1572,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "js/app.js",
+			"file": "react/ParticipantForm.react.js",
 			"settings":
 			{
-				"buffer_size": 67,
+				"buffer_size": 1868,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "react/Participant.react.js",
+			"settings":
+			{
+				"buffer_size": 696,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "var React = require('react');\nvar ReactPropTypes = React.PropTypes;\nvar MeetingActions = require('../js/MeetingActions');\nvar classNames = require('classnames');\n\nvar Overview = React.createClass({\n\n	propTypes: {\n		meeting: ReactPropTypes.object.isRequired\n	},\n\n	render: function() {\n\n		var orderingNumber = 0;\n		var minuteRows = this.props.meeting.minutes.map(function(minute) {\n			orderingNumber++;\n			return (<div className=\"row\">\n						<div className=\"col-md-3\"><b>{orderingNumber}.</b> {minute.topic}</div>\n						<div className=\"col-md-9\">{minute.text}</div>\n					</div>);\n		});\n\n		var participantsRows = this.props.meeting.participants.map(function(part) {\n			return (<div className=\"row\"><div className=\"col-md-10 col-md-offset-1\">{part}</div></div>);\n		});\n\n		return (\n			<div>\n				<div className=\"row\">\n					<div className=\"col-md-12\"><h4>Participant</h4></div>					\n				</div>\n				{participantsRows}\n				<div className=\"row\">\n					<div className=\"col-md-12\"><h4>Minutes</h4></div>					\n				</div>\n				{minuteRows}\n			</div>\n		);		\n	}\n});\n\nmodule.exports = Overview;",
+			"file": "react/Overview.react.js",
+			"file_size": 1116,
+			"file_write_time": 131067285498872202,
+			"settings":
+			{
+				"buffer_size": 1075,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "react/MeetingMinute.react.js",
+			"settings":
+			{
+				"buffer_size": 1748,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "react/MeetingMinuteForm.react.js",
+			"settings":
+			{
+				"buffer_size": 1529,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/MeetingActions.js",
+			"settings":
+			{
+				"buffer_size": 776,
 				"line_ending": "Windows",
-				"name": "var React = require('react');"
+				"name": "var AppDispatcher = require('AppDispatcher');"
 			}
 		}
 	],
@@ -59,11 +193,16 @@
 	[
 		"/C/Projects/Teron/meeting_minutes",
 		"/C/Projects/Teron/meeting_minutes/js",
-		"/C/Projects/Teron/meeting_minutes/node_modules"
+		"/C/Projects/Teron/meeting_minutes/react"
 	],
 	"file_history":
 	[
+		"/C/Projects/Teron/meeting_minutes/js/AppDispatcher.js",
 		"/C/Projects/Teron/meeting_minutes/package.json",
+		"/C/Projects/Teron/meeting_minutes/js/app.js",
+		"/C/Projects/Teron/meeting_minutes/index.html",
+		"/C/Projects/Teron/meeting_minutes/README.md",
+		"/C/Projects/Teron/meeting_minutes/js/bundle.js",
 		"/C/Projects/Teron/meeting_minutes/node_modules/bootstrap/package.json",
 		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter.service.js",
 		"/C/Projects/Tikkurila/src/Tikkurila.FindPromotePainter/Scripts/FPP/findpainter/findpainter-searchfield.filter.js",
@@ -145,56 +284,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "index.html",
+					"file": "react/Header.react.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 447,
+						"buffer_size": 1608,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								447,
-								447
-							]
-						],
-						"settings":
-						{
-							"apply_syntax_touched": true,
-							"auto_name": "",
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 67,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								67,
-								67
+								641,
+								641
 							]
 						],
 						"settings":
@@ -207,7 +314,275 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/MeetingStore.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2192,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								314,
+								314
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"auto_name": "var AppDispatcher = require('AppDispatcher');",
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "react/MeetingApp.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 996,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								79,
+								30
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"auto_name": "var React = require('react');",
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "react/Meeting.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1572,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								869,
+								869
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "react/ParticipantForm.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1868,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								849,
+								849
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "react/Participant.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 696,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								568,
+								568
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "react/Overview.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1075,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								743,
+								743
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "react/MeetingMinute.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1748,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1104,
+								1104
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "react/MeetingMinuteForm.react.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1529,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								271,
+								271
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "js/MeetingActions.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 776,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								374,
+								374
+							]
+						],
+						"settings":
+						{
+							"apply_syntax_touched": true,
+							"auto_name": "var AppDispatcher = require('AppDispatcher');",
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
